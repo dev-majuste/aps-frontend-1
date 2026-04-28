@@ -1,0 +1,7 @@
+.container {
+    margin: 10px;
+    height: 50px;
+    padding: 15px;
+    border-radius: 30px;
+    background-color: var(--cor-cinza-roxo);
+}

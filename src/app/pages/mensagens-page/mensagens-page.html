@@ -1,0 +1,40 @@
+<section class="container">
+    <div class="header">
+        @if (chamado) {
+            <div class="textos">
+                <h1>{{chamado.titulo}}</h1>
+                <p>{{chamado.descricao}}</p>
+                <div class="usuarios">
+                    <span class="usuario">Cliente: {{chamado.cliente.nome}}</span>
+                    <span class="usuario">Suporte: {{chamado.tecnico?.nome}}</span>
+                </div>
+            </div>
+        }
+        <div class="info">
+            <span class="status">{{chamado?.status}}</span>
+            <p>{{chamado?.dataCriacao}}</p>
+        </div>
+    </div>
+    <div class="mensagens">
+        @for (mensagem of mensagens; track mensagem.id) {
+            <div class="mensagem-card" [class.msgCliente]="usuario?.id === mensagem.usuario.id">
+                <div class="card-topo">
+                    <h2>{{mensagem.usuario.nome}}</h2>
+                </div>
+                <div class="card-meio">
+                    <p>{{mensagem.mensagem}}</p>
+                </div>
+                <div class="card-fim">
+                    <span>{{mensagem.data}}</span>
+                </div>
+            </div>
+        }
+    </div>
+    <!--Caso seja a vez do usuario-->
+    @if (chamado?.status?.match(usuario!!.cargo)) {
+        <div class="input-card">
+            <input type="text" name="mensagem" #msg>
+            <button (click)="enviar(msg.value)">Enviar</button>
+        </div>
+     }
+</section>

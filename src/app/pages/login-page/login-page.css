@@ -1,0 +1,29 @@
+input {
+    all: unset;
+    width: auto;
+    font-size: 20px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 8px 0.1px var(--cor-cinza);
+    color: var(--cor-cinza);
+    background-color: var(--cor-cinza-bk);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+button {
+    margin: auto;
+    background-color: var(--cor-roxo-primario);
+    border-style: none;
+    border-radius: 25px;
+    box-shadow: 0 0 8px 0.05px black;
+    color: white;
+    font-size: 20px;
+    width: fit-content;
+    padding: 10px 50px;
+}
+button:hover {
+    cursor: pointer;
+}

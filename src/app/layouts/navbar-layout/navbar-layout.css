@@ -1,0 +1,76 @@
+:host {
+    --tamanho-div-menu: 160px;
+    --cor-fundo: #504e87;
+    --cor-selecionado: #9c98f7;
+}
+.navbar {
+    background-color: var(--cor-roxo-primario);
+    border-radius: 25px;
+    box-shadow: 0 0 8px 3px var(--cor-roxo-escuro);
+    height: 100%;
+    width: 160px;
+}
+.profile, .logout {
+    height: var(--tamanho-div-menu);
+    justify-content: center;
+}
+.menu, .profile, .logout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.menu {
+    height: calc(100% - (var(--tamanho-div-menu) * 2));
+    gap: 15px;
+    list-style: none;
+}
+.profile-card, a {
+    width: 80px;
+    height: 80px;
+    border-radius: 25px;
+    background-color: var(--cor-roxo-secundario);
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 5px 1px var(--cor-fundo);
+}
+a {
+    padding: 5px;
+    justify-content: center;
+}
+.menu-item img {
+    width: 40px;
+}
+.profile-card {
+    justify-content: space-between;
+    padding: 10px 5px;
+}
+.profile-card {
+    font-size: 16px;
+}
+.profile-card span {
+    font-size: 11px;
+}
+.logout button {
+    width: 64px;
+    height: 64px;
+    border-radius: 30px;
+    border-style: none;
+    background-color: var(--cor-roxo-secundario);
+    color: white;
+    box-shadow: 0 0 5px 1px var(--cor-fundo);
+}
+.activate-style {
+    box-shadow: 0 0 5px 2px #716eae;
+    background-color: var(--cor-selecionado);
+    animation: select linear;
+    transition: 0.2s;
+}
+a:hover {
+    transform: scale(1.05);
+    background-color: #9c98f7;
+    transition: 0.3s;
+}

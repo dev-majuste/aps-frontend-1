@@ -1,0 +1,8 @@
+<div class="app-container">
+    @if (mostrarNavbar) {
+      <app-navbar-layout [usuario]=usuario></app-navbar-layout>
+    }
+    <main class="main-container">
+      <router-outlet></router-outlet>
+    </main>
+</div>

@@ -1,0 +1,7 @@
+<app-auth-layout titulo="Login" content="Não possui uma conta? Registre-se" link="/register">
+    <form>
+        <div class="input-group"><input type="email" #emailInput placeholder="Email"></div>
+        <div class="input-group"><input type="password" #senhaInput placeholder="Senha"></div>
+        <button class="btn-auth" type="button" (click)="logar(emailInput.value, senhaInput.value)">Entrar</button>
+    </form>
+</app-auth-layout>

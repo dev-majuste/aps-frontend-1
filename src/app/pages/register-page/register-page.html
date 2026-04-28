@@ -1,0 +1,8 @@
+<app-auth-layout titulo = "Registrar" content="Ja possui uma conta?" link="/login">
+    <form>
+        <div class="input-group"><input type="text" #nome placeholder="Nome"></div>
+        <div class="input-group"><input type="email" #email placeholder="Email"></div>
+        <div class="input-group"><input type="password" #senha placeholder="Senha"></div>
+        <button class="btn-auth" type="button" (click)="registrar(nome.value, email.value, senha.value)">Entrar</button>
+    </form>
+</app-auth-layout>

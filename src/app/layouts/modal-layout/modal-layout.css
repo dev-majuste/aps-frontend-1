@@ -1,0 +1,37 @@
+/*
+    NAO TOCAR, ESSA BOMBA BUGA SO DE RESPIRAR PERTO!
+    NAO MANDAR PRA IA!!!
+    BUILDAR NOVAMENTE CASO FAÇA QUALQUER MUDANÇA!
+*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.662);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(1px);
+}
+
+.modal-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  min-width: 400px;
+  position: relative;
+}
+.close-btn {
+    color: var(--cor-roxo-primario);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: bold;
+}

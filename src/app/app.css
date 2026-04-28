@@ -1,0 +1,10 @@
+app-navbar-layout {
+    display: flex;
+    height: 100vh;
+}
+.main-container {
+    width: 100vw;
+}
+.app-container {
+    display: flex;
+}

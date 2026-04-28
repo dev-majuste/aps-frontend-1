@@ -1,0 +1,125 @@
+:host {
+    --cor-selecionado: #beb8c0;;
+}
+.chamados {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.header {
+    top: 15px;
+    width: 100%;
+    display: flex;
+}
+app-searchbar-layout {
+    width: 99%;
+    margin: auto;
+}
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.chamados {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.chamados .erroSpan {
+    margin: auto;
+    font-size: 24px;
+    color: var(--cor-cinza);
+    font-weight: bolder;
+}
+.opc {
+    margin-left: 15px;
+    height: 50px;
+    gap: 20px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+}
+.opc span {
+    color: var(--cor-cinza-search);
+    font-weight: bolder;
+}
+.opc .selecionado {
+    color: var(--cor-roxo-primario);
+    font-size: 20px;
+    transition: 0.25s;
+
+}
+.opc span:hover {
+    cursor: pointer;
+    transform: scale3d(1.05, 1.05, 1.0);
+    transition: all 0.2s;
+}
+.criar {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    padding: 20px 30px;
+    background-color: var(--cor-vermelho);
+    border-style: none;
+    border-radius: 100px;
+    box-shadow: 0 0 5px 3px var(--cor-cinza);
+    color: white;
+    font-size: 20px;
+}
+.criar:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: ease-out 0.2s;
+}
+.chamado-card {
+    width: 95%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 20px;
+    background-color: var(--cor-cinza-roxo);
+    box-sizing: border-box;
+    border-radius: 25px;
+    box-shadow: 0 0 8px 0.5px rgba(0, 0, 0, 0.454);
+}
+.chamado-card:hover {
+    background-color: var(--cor-selecionado);
+    cursor: pointer;
+    margin: 5px 0;
+    transform: scale(1.03);
+    transition: all 0.2s;
+}
+.textos, .info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.info {
+    align-items: end;
+    justify-content: space-between;
+    color: var(--cor-info);
+}
+.textos {
+    color: var(--cor-textos);
+    gap: 8px;
+}
+.textos p {
+    color: var(--cor-paragrafos);
+}
+.textos span {
+    font-size: 20px;
+}
+.info .status {
+    color: white;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.status-aberto { background: #d65959; }
+.status-andamento { background: #62b34e; }
+.status-resolvido { background: #cd68de; }
+.status-aguardando { background: #d79c3d; }

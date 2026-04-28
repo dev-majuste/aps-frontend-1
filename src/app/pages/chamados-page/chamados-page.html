@@ -1,0 +1,48 @@
+<section class="container">
+    <div class="header">
+        <app-searchbar-layout>
+            <div class="opc">
+                @for (item of searchBar; track item.nome) {
+                    @if (usuario && item.cargo.includes(usuario.cargo)) {
+                        <span (click)="item.funcao(usuario.id)" [class.selecionado]="searchSelecionado === item.nome">{{item.nome}}</span>
+                    }
+                }
+            </div>
+        </app-searchbar-layout>
+    </div>
+    <div class="chamados">
+        @if (chamados.length == 0) {
+            <span class="erroSpan">Nenhum foi encontrado</span>
+        } @else {
+            @for (chamado of chamados; track chamado.id) {
+                <div [routerLink]="['/chamado', chamado.id]" class="chamado-card">
+                    <div class="textos">
+                        <h1>{{chamado.titulo}} <span>#{{chamado.id}}</span></h1>
+                        <p>{{chamado.descricao}}</p>
+                    </div>
+                    <div class="info">
+                        <span [class]="getStyleStatus(chamado.status)" class="status">{{chamado.status.replaceAll('_', ' ')}}</span>
+                        <p class="data">{{chamado.dataCriacao}}</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <button class="criar" (click)="abrirNovoChamado()">Novo Chamado</button>
+</section>
+@if (exibirModalNovoChamado) {
+    <app-modal-layout (fechar)="exibirModalNovoChamado = false">
+        <form class="forms-chamado">
+            <h2>Novo Chamado</h2>
+            <input type="text" placeholder="Titulo" #titulo>
+            <input type="text" placeholder="Descrição" #descricao>
+            <select #catSelect (change)="0">
+                <option value="" disabled selected>Selecione uma categoria</option>
+                @for (item of categorias; track item.id) {
+                    <option [value]="item.id">{{item.nome}}</option>
+                }
+            </select>
+            <button (click)="criarChamado(titulo.value, descricao.value, catSelect.value)">Enviar</button>
+        </form>
+    </app-modal-layout>
+}

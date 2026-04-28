@@ -1,0 +1,23 @@
+<section class="navbar">
+    <div class="profile">
+        <div class="profile-card">
+            <img src="icons/user.png">
+            <p>{{usuario?.nome}}<span>#{{usuario?.id}}</span></p>
+        </div>
+    </div>
+    <ul class="menu">
+        @for (item of menu; track item.texto) {
+            @if (item.cargos.includes(usuario?.cargo || 'CLIENTE')) {
+                <li class="menu-item">
+                    <a [routerLink]="item.rota" routerLinkActive="activate-style">
+                        <img src="{{item.imagem}}">
+                        <p>{{item.texto}}</p>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+    <div class="logout">
+        <button (click)="logout()">Sair</button>
+    </div>
+</section>
