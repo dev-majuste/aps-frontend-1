@@ -1,1 +1,20 @@
-<p>categorias-page works!</p>
+<section class="container">
+    <div class="header">
+        <app-searchbar-layout></app-searchbar-layout>
+    </div>
+    @if(categorias.length == 0) {
+        <div class="error-carregar">
+            <span>Nenhuma categoria encontrada</span>
+        </div>
+    } @else {
+        <div class="categorias">
+            <div class="grid">
+                @for (categoria of categorias; track categoria.id) {
+                <div class="categoria-card">
+                    a
+                </div>
+            }
+            </div>
+        </div>
+    }
+</section>

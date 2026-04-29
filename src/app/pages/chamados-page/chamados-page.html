@@ -12,7 +12,7 @@
     </div>
     <div class="chamados">
         @if (chamados.length == 0) {
-            <span class="erroSpan">Nenhum foi encontrado</span>
+            <span class="erroSpan">Nenhum chamado foi encontrado</span>
         } @else {
             @for (chamado of chamados; track chamado.id) {
                 <div [routerLink]="['/chamado', chamado.id]" class="chamado-card">

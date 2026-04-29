@@ -1,1 +1,20 @@
-<p>usuarios-page works!</p>
+<section class="container">
+    <div class="header">
+        <app-searchbar-layout></app-searchbar-layout>
+    </div>
+    @if (usuarios.length == 0) {
+        <div class="error-carregar">
+            <span>Nenhum usuario encontrado</span>
+        </div>
+    } @else {
+        <div class="usuarios">
+            <div class="grid">
+                @for (usuario of usuarios; track usuario.id) {
+                <div class="usuario-card">
+                    a
+                </div>
+            }
+            </div>
+        </div>
+    }
+</section>

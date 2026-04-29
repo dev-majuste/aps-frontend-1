@@ -1,0 +1,49 @@
+.header {
+    margin: 12px;
+    width: 100%;
+    display: flex;
+    position: sticky;
+    top: 10px;
+}
+app-searchbar-layout {
+    width: 98%;
+    margin: auto;
+}
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.error-carregar, .avaliacoes {
+    width: 100%;
+    height: 100%;
+}
+.error-carregar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--cor-cinza);
+    font-weight: bolder;
+}
+.avaliacoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*NAO SEI OQ EU FIZ NO GRID, APENAS NAO TOQUE*/
+.grid {
+    width: 1235px;
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    gap: 40px 125px;
+}
+.avaliacao-card {
+    width: 200px;
+    height: 250px;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 0 5px 3px var(--cor-cinza);
+    background-color: var(--cor-cinza-roxo);
+}

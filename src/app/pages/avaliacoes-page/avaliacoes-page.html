@@ -1,1 +1,20 @@
-<p>avaliacoes-page works!</p>
+<section class="container">
+    <div class="header">
+        <app-searchbar-layout></app-searchbar-layout>
+    </div>
+    @if(!ava || ava.length === 0) {
+        <div class="error-carregar">
+            <span>Nenhuma avaliação encontrada</span>
+        </div>
+    } @else {
+        <div class="avaliacoes">
+            <div class="grid">
+                @for (categoria of ava; track categoria.id) {
+                <div class="avaliacao-card">
+                    a
+                </div>
+            }
+            </div>
+        </div>
+    }
+</section>

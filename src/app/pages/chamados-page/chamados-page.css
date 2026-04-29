@@ -7,12 +7,12 @@
     flex-direction: column;
 }
 .header {
-    top: 15px;
+    margin: 12px;
     width: 100%;
     display: flex;
 }
 app-searchbar-layout {
-    width: 99%;
+    width: 98%;
     margin: auto;
 }
 .container {

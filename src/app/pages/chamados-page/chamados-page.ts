@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SearchbarLayout } from "../../layouts/searchbar-layout/searchbar-layout";
-import { Categoria, Chamado, Status, Usuario } from '../../models/types';
+import { Cargo, Categoria, Chamado, Status, Usuario } from '../../models/types';
 import { AuthService } from '../../services/auth-service';
 import { ChamadoService } from '../../services/chamado-service';
 import { ModalLayout } from '../../layouts/modal-layout/modal-layout';
@@ -20,11 +20,19 @@ export class ChamadosPage implements OnInit{
   searchSelecionado = '';
   exibirModalNovoChamado: boolean = false;
 
-  constructor(private auth: AuthService, private chamadoService: ChamadoService, private categoriaService: CategoriaService) {}
+  constructor(private auth: AuthService, private chamadoService: ChamadoService, private categoriaService: CategoriaService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.usuario = this.auth.getUsuario();
+    if(!this.usuario) {return}
     this.carregarCategorias();
+    this.autoSelecionar()
+  }
+
+  autoSelecionar() {
+    const cargoUsuario = this.usuario?.cargo
+    const items = this.searchBar.filter(item => item.cargo.includes(cargoUsuario as Cargo))
+    items[0].funcao(Number(this.usuario?.id));
   }
 
   meusChamados() {
@@ -46,6 +54,7 @@ export class ChamadosPage implements OnInit{
     this.chamadoService.buscarTodos().subscribe({
       next: (dados) => {
         this.chamados = dados;
+        this.cdr.detectChanges()
       },
       error: (err) => {
         console.error('Erro ao buscar chamados:', err);
@@ -108,7 +117,7 @@ export class ChamadosPage implements OnInit{
   searchBar = [
     {
       nome: 'Meus chamados',
-      funcao: () => {
+      funcao: (id?: number) => {
         this.searchSelecionado = 'Meus chamados';
         this.meusChamados();
       },
@@ -116,7 +125,7 @@ export class ChamadosPage implements OnInit{
     },
     {
       nome: 'Todos os chamados',
-      funcao: (id:number) => {
+      funcao: (id: number) => {
         this.searchSelecionado = 'Todos os chamados';
         this.todosChamados(id)},
       cargo: ['SUPORTE','ADMIN']
