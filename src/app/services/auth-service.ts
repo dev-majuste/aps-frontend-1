@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API = "http://localhost:8080/usuarios"; //URL do endpoint(api rest)
+  private readonly API = `${environment.apiUrl}/usuarios`; //URL do endpoint(api rest)
 
   constructor(private http: HttpClient, private router: Router) {}
 

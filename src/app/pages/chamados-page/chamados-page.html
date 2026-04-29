@@ -11,7 +11,7 @@
         </app-searchbar-layout>
     </div>
     <div class="chamados">
-        @if (chamados.length == 0) {
+        @if (chamados == null) {
             <span class="erroSpan">Nenhum chamado foi encontrado</span>
         } @else {
             @for (chamado of chamados; track chamado.id) {

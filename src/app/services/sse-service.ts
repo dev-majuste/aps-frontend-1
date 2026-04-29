@@ -1,12 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AuthService } from './auth-service';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SseService {
-  private readonly API = "http://localhost:8080/fluxo"; //URL do endpoitn
+  private readonly API = `${environment.apiUrl}/fluxo`; //URL do endpoitn
 
   constructor(private _zone: NgZone, private auth: AuthService) {}
 

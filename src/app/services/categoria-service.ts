@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Categoria } from '../models/types';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriaService {
-  private readonly API = 'http://localhost:8080/categorias'
+  private readonly API = `${environment.apiUrl}/categorias`
 
   constructor(private http: HttpClient) {}
 
@@ -21,7 +22,7 @@ export class CategoriaService {
   }
   //Metodo para criar uma nova categoria
   criar(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.API, categoria);
+    return this.http.post<Categoria>(this.API, categoria, {});
   }
   //Metodo para atualizar uma categoria
   atualizar(id: number, categoria: Categoria): Observable<Categoria> {

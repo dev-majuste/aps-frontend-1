@@ -1,8 +1,14 @@
 <section class="container">
     <div class="header">
-        <app-searchbar-layout></app-searchbar-layout>
+        <app-searchbar-layout>
+            <div class="opc">
+                @for (item of searchBar; track item.nome) {
+                    <span (click)="item.funcao()" [class.selecionado]="searchSelecionado === item.nome">{{item.nome}}</span>
+                }
+            </div>
+        </app-searchbar-layout>
     </div>
-    @if(categorias.length == 0) {
+    @if(categorias == null) {
         <div class="error-carregar">
             <span>Nenhuma categoria encontrada</span>
         </div>
@@ -11,10 +17,22 @@
             <div class="grid">
                 @for (categoria of categorias; track categoria.id) {
                 <div class="categoria-card">
-                    a
+                    .card-top+.card-middle+.card-bottom
                 </div>
             }
             </div>
         </div>
     }
+    <button class="criar" (click)="abrirNovaCategoria()">Novo Chamado</button>
 </section>
+
+@if (exibirModalNovaCategoria) {
+    <app-modal-layout (fechar)="exibirModalNovaCategoria = false">
+        <form class="forms-chamado">
+            <h2>Nova Categoria</h2>
+            <input type="text" placeholder="Nome" #titulo>
+            <input type="text" placeholder="Descrição" #descricao>
+            <button (click)="criarCategoria(titulo.value, descricao.value)">Enviar</button>
+        </form>
+    </app-modal-layout>
+}
