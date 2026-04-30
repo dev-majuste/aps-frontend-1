@@ -88,6 +88,7 @@ export class ChamadosPage implements OnInit{
     this.chamadoService.criar(novoChamado as Chamado, this.usuario.id).subscribe({
       next: (res) => {
         this.meusChamados();
+        console.log('ERRO',res)
         this.exibirModalNovoChamado = false;
       },
       error: (err) => {
@@ -98,8 +99,9 @@ export class ChamadosPage implements OnInit{
 
   carregarCategorias() {
     this.categoriaService.buscarTodos().subscribe({
-      next: (dados) => {
-        this.categorias = dados;
+      next: (res) => {
+        console.log("DADOS CARREGADOS")
+        this.categorias = res;
       },
       error: (err) => console.error('Erro ao carregar categorias', err)
     });

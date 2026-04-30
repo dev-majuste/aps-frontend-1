@@ -26,8 +26,8 @@ export class UsuarioService {
   }
   //Metodo para mudar o cargo de um usuario
   atualizarCargo(id: number, cargo: Cargo, idAdmin: number): Observable<Usuario> {
-    const params = new HttpParams().set('idAdmin', idAdmin.toString())
-    return this.http.patch<Usuario>(`${this.API}/${id}`, cargo, {params});
+    const params = new HttpParams().set('idAdmin', idAdmin)
+    return this.http.patch<Usuario>(`${this.API}/${id}`, JSON.stringify(cargo), { params, headers: { 'Content-Type': 'application/json' }});
   }
   //Metodo para remover um usuario
   remover(id: number): Observable<void> {

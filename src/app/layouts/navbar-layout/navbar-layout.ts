@@ -18,7 +18,7 @@ export class NavbarLayout {
     {
       texto: "Dashboard",
       rota: "/dashboard",
-      imagem: "icons/chat.png",
+      imagem: "icons/dashboard.png",
       cargos: ['ADMIN']
     },
     {
@@ -30,19 +30,19 @@ export class NavbarLayout {
     {
       texto: "Usuarios",
       rota: "/usuarios",
-      imagem: "icons/.png",
+      imagem: "icons/users.png",
       cargos: ['ADMIN']
     },
     {
       texto: "Categorias",
       rota: "/categorias",
-      imagem: "icons/.png",
+      imagem: "icons/letter.png",
       cargos: ['ADMIN']
     },
     {
       texto: "Avaliações",
       rota: "/avaliacoes",
-      imagem: "icons/.png",
+      imagem: "icons/favorites.png",
       cargos: ['SUPORTE', 'ADMIN']
     }
   ];

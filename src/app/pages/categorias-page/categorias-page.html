@@ -17,13 +17,23 @@
             <div class="grid">
                 @for (categoria of categorias; track categoria.id) {
                 <div class="categoria-card">
-                    .card-top+.card-middle+.card-bottom
+                    <div class="card-top">
+                        <span>#{{categoria.id}}</span>
+                        <button type="button" (click)="abrirEditor(categoria.id)"><img src="icons/letter.png" alt="Editar Categoria"></button>
+                    </div>
+                    <div class="card-middle">
+                        <h2>{{categoria.nome}}</h2>
+                        <p>Descrição: <span>{{categoria.descricao}}</span></p>
+                    </div>
+                    <div class="card-bottom">
+                        <button type="button" (click)="remover(categoria.id)"><img src="icons/trash.png" alt=""></button>
+                    </div>
                 </div>
             }
             </div>
         </div>
     }
-    <button class="criar" (click)="abrirNovaCategoria()">Novo Chamado</button>
+    <button type="button" class="criar" (click)="abrirNovaCategoria()">Nova Categoria</button>
 </section>
 
 @if (exibirModalNovaCategoria) {
@@ -32,7 +42,21 @@
             <h2>Nova Categoria</h2>
             <input type="text" placeholder="Nome" #titulo>
             <input type="text" placeholder="Descrição" #descricao>
-            <button (click)="criarCategoria(titulo.value, descricao.value)">Enviar</button>
+            <button type="button" (click)="criarCategoria(titulo.value, descricao.value)">Enviar</button>
         </form>
+    </app-modal-layout>
+}
+@if (exibirModalEditarCategoria) {
+    <app-modal-layout (fechar)="exibirModalEditarCategoria = false">
+        @if (catSel) {
+            <form class="forms-chamado">
+                <h2>Editar Categoria</h2>
+                <input type="text" placeholder="Nome" #titulo value={{catSel.nome}}>
+                <input type="text" placeholder="Descrição" #descricao value={{catSel.descricao}}>
+                <button type="button" (click)="atualizarCategoria(catSel.id, titulo.value, descricao.value)">Salvar</button>
+            </form>
+        } @else {
+            <div class="loading"><span>Buscando informações</span></div>
+        }
     </app-modal-layout>
 }

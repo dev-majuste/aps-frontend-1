@@ -7,7 +7,6 @@ import { DashboardPage } from './pages/dashboard-page/dashboard-page';
 import { UsuariosPage } from './pages/usuarios-page/usuarios-page';
 import { CategoriasPage } from './pages/categorias-page/categorias-page';
 import { AvaliacoesPage } from './pages/avaliacoes-page/avaliacoes-page';
-import { ChamadoMensagensPage } from './pages/chamado-mensagens-page/chamado-mensagens-page';
 import { MensagensPage } from './pages/mensagens-page/mensagens-page';
 
 export const routes: Routes = [

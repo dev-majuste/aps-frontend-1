@@ -4,6 +4,7 @@
     display: flex;
     position: sticky;
     top: 10px;
+    z-index: 999;
 }
 app-searchbar-layout {
     width: 98%;
@@ -34,19 +35,27 @@ app-searchbar-layout {
 }
 /*NAO SEI OQ EU FIZ NO GRID, APENAS NAO TOQUE*/
 .grid {
-    margin-top: 60px;
+    margin-top: 20px;
     width: 1235px;
     display: grid;
     grid-template-columns: repeat(4, 200px);
     gap: 40px 125px;
 }
 .categoria-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 200px;
-    height: 250px;
+    height: 220px;
     padding: 30px;
     border-radius: 25px;
-    box-shadow: 0 0 5px 3px var(--cor-cinza);
+    box-shadow: 0 0 8px 2px rgba(70, 70, 70, 0.675);
     background-color: var(--cor-cinza-roxo);
+    transition: all 0.2s;
+}
+.categoria-card:hover {
+    transition: all 0.2s;
+    transform: scale(1.1);
 }
 .criar {
     position: absolute;
@@ -59,6 +68,12 @@ app-searchbar-layout {
     box-shadow: 0 0 5px 3px var(--cor-cinza);
     color: white;
     font-size: 20px;
+    transition: ease 0.25s;
+}
+.criar:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: ease-in 0.25s;
 }
 .forms-chamado {
     display: flex;
@@ -104,15 +119,81 @@ app-searchbar-layout {
 .opc span {
     color: var(--cor-cinza-search);
     font-weight: bolder;
+    transition: all 0.25s;
 }
 .opc .selecionado {
     color: var(--cor-roxo-primario);
     font-size: 20px;
-    transition: 0.25s;
+    transition: ease 0.4s;
 
 }
 .opc span:hover {
     cursor: pointer;
     transform: scale3d(1.05, 1.05, 1.0);
     transition: all 0.2s;
+}
+.card-bottom, .card-top {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.card-bottom img, .card-top img{
+    height: 25px;
+}
+.card-bottom button, .card-top button {
+    border-radius: 40px;
+    padding: 5px 7px;
+    border-style: none;
+    box-shadow: 0 0 7px 0.5px rgba(83, 83, 83, 0.652);
+}
+.card-bottom button {
+    background-color: var(--cor-vermelho);
+}
+.categoria-card button {
+    transition: all 0.3s;
+}
+.categoria-card button:hover {
+    transform: scale(1.2);
+    transition: all 0.3s;
+    opacity: 80%;
+    cursor: pointer;
+}
+.card-top button {
+    background-color: var(--cor-roxo-primario);
+}
+.card-top img {
+    margin: 3px 0 0 3px;
+}
+.card-middle {
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    margin: 10px auto;
+    gap: 10px;
+    overflow-y: auto;
+}
+.card-middle h2 {
+    font-size: 24px;
+    margin: auto;
+    font-weight: bold;
+    color: var(--cor-textos);
+}
+.card-top span {
+    font-size: 19px;
+    color: var(--cor-textos);
+    font-weight: bold;
+    margin: auto auto auto 0;
+}
+.card-middle p {
+    font-size: 19px;
+    height: 40px;
+    color: var(--cor-info);
+}
+.loading {
+    transform: scale(1.0);
+    font-size: 20px;
+    color: var(--cor-textos);
+}
+.loading span {
+    margin: auto;
 }

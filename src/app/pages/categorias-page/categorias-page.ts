@@ -13,35 +13,34 @@ import { ModalLayout } from "../../layouts/modal-layout/modal-layout";
 export class CategoriasPage implements OnInit {
   categorias: Categoria[] = [];
   exibirModalNovaCategoria: boolean = false;
+  exibirModalEditarCategoria: boolean = false;
+  catSel?: Categoria;
   searchSelecionado = ''
 
   constructor(private categoriaService: CategoriaService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.carregarCategorias()
-    this.autoSelecionar
+    this.autoSelecionar()
   }
 
   autoSelecionar() {
     const selecioando = this.searchBar[0]
     this.searchSelecionado = selecioando.nome;
+    selecioando.funcao()
   }
 
   criarCategoria(titulo: string, descricao:  string) {
-    if(titulo == null || descricao == null) {return}
-    const categoria = {
+    if (!titulo || !descricao) {return}
+    this.exibirModalNovaCategoria = false;
+    const novaCategoria = {
       nome: titulo,
       descricao: descricao
     }
-        this.categoriaService.criar(categoria as Categoria).subscribe({
-          next: (res) => {
-            this.carregarCategorias();
-            this.exibirModalNovaCategoria = false;
-          },
-          error: (err) => {
-            console.error('Erro ao criar um novo chamado:', err)
-          }
-        });
+    this.categoriaService.criar(novaCategoria as Categoria).subscribe({
+      next: (res) => {
+        this.carregarCategorias()
+      }
+    })
   }
   abrirNovaCategoria() {
     this.exibirModalNovaCategoria = true;
@@ -53,6 +52,44 @@ export class CategoriasPage implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  remover(id: number) {
+    this.selecionarCat(id)
+    this.categoriaService.remover(id).subscribe({
+      next: (res) => {
+        this.catSel = undefined;
+        this.carregarCategorias();
+      }
+    })
+  }
+
+  selecionarCat(id: number) {
+    this.categoriaService.buscarPorId(id).subscribe({
+      next: (res) => {
+        this.catSel = res;
+        this.cdr.detectChanges();
+      }
+    })
+  }
+
+  abrirEditor(id: number) {
+    this.selecionarCat(id);
+    this.exibirModalEditarCategoria = true
+  }
+  atualizarCategoria(id: number, nome: string, descricao: string) {
+    if(!nome || !descricao) {return}
+    const novaCategoria = {
+      nome: nome,
+      descricao: descricao
+    }
+    this.categoriaService.atualizar(id, novaCategoria as Categoria).subscribe({
+      next: (res) => {
+        this.catSel = undefined;
+        this.carregarCategorias()
+        this.exibirModalEditarCategoria = false
+      }
+    })
   }
 
   searchBar = [

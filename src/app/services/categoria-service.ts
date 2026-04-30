@@ -22,7 +22,7 @@ export class CategoriaService {
   }
   //Metodo para criar uma nova categoria
   criar(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.API, categoria, {});
+    return this.http.post<Categoria>(this.API, categoria);
   }
   //Metodo para atualizar uma categoria
   atualizar(id: number, categoria: Categoria): Observable<Categoria> {

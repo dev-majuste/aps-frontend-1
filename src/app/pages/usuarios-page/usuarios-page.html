@@ -1,8 +1,14 @@
 <section class="container">
     <div class="header">
-        <app-searchbar-layout></app-searchbar-layout>
+        <app-searchbar-layout>
+            <div class="opc">
+                @for (item of searchBar; track item.nome) {
+                    <span (click)="item.funcao()" [class.selecionado]="searchSelecionado === item.nome">{{item.nome}}</span>
+                }
+            </div>
+        </app-searchbar-layout>
     </div>
-    @if (usuarios.length == 0) {
+    @if (usuarios == null) {
         <div class="error-carregar">
             <span>Nenhum usuario encontrado</span>
         </div>
@@ -11,10 +17,40 @@
             <div class="grid">
                 @for (usuario of usuarios; track usuario.id) {
                 <div class="usuario-card">
-                    a
+                    <div class="card-top">
+                        <span>#{{usuario.id}}</span>
+                        <button type="button" (click)="abrirEditor(usuario.id)"><img src="icons/letter.png" alt="Editar Categoria"></button>
+                    </div>
+                    <div class="card-middle">
+                        <p>Nome: <span>{{usuario.nome}}</span></p>
+                        <p>Email: <span>{{usuario.email}}</span></p>
+                        <p>Cargo: <span>{{usuario.cargo}}</span></p>
+                    </div>
+                    <div class="card-bottom">
+                        <button type="button" (click)="remover(usuario.id)"><img src="icons/trash.png" alt=""></button>
+                    </div>
                 </div>
             }
             </div>
         </div>
     }
 </section>
+@if (exibirModalEditor) {
+    <app-modal-layout (fechar)="exibirModalEditor = false">
+        @if (userEditor) {
+            <form class="forms-editor">
+                <h2>Editar Usuario</h2>
+                <input type="text" placeholder="Nome" #nome value={{userEditor.nome}}>
+                <input type="text" placeholder="Email" #email value={{userEditor.email}}>
+                <select #cargoSel [value]="userEditor.cargo">
+                    @for (item of cargos; track item) {
+                        <option [value]="item" [selected]="item === userEditor.cargo">{{item}}</option>
+                    }
+                </select>
+                <button type="button" (click)="atualizarDados(userEditor.id, nome.value, email.value, cargoSel.value)">Salvar</button>
+            </form>
+        } @else {
+            <div class="loading"><span>Buscando informações</span></div>
+        }
+    </app-modal-layout>
+}

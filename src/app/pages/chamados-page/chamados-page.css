@@ -45,11 +45,12 @@ app-searchbar-layout {
 .opc span {
     color: var(--cor-cinza-search);
     font-weight: bolder;
+    transition: all 0.25s;
 }
 .opc .selecionado {
     color: var(--cor-roxo-primario);
     font-size: 20px;
-    transition: 0.25s;
+    transition: ease 0.4s;
 
 }
 .opc span:hover {
@@ -68,11 +69,12 @@ app-searchbar-layout {
     box-shadow: 0 0 5px 3px var(--cor-cinza);
     color: white;
     font-size: 20px;
+    transition: ease 0.25s;
 }
 .criar:hover {
     cursor: pointer;
     transform: scale(1.05);
-    transition: ease-out 0.2s;
+    transition: ease-in 0.25s;
 }
 .chamado-card {
     width: 95%;
@@ -84,13 +86,14 @@ app-searchbar-layout {
     box-sizing: border-box;
     border-radius: 25px;
     box-shadow: 0 0 8px 0.5px rgba(0, 0, 0, 0.454);
+    transition: all 0.25s;
 }
 .chamado-card:hover {
     background-color: var(--cor-selecionado);
     cursor: pointer;
     margin: 5px 0;
     transform: scale(1.03);
-    transition: all 0.2s;
+    transition: all 0.25s;
 }
 .textos, .info {
     display: flex;
