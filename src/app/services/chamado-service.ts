@@ -35,14 +35,14 @@ export class ChamadoService {
 
   //Metodo para criar um novo chamado
   criar(chamado: Chamado, idUsuario: number): Observable<Chamado> {
-    const params = new HttpParams().set('idUsuario', idUsuario.toString());
+    const params = new HttpParams().set('idUsuario', idUsuario);
     return this.http.post<Chamado>(this.API, chamado, {params});
   }
 
   //Metodo para atender um chamado
   atender(id: number, idSuporte: number): Observable<Chamado> {
-    const params = new HttpParams().set('idUsuario', idSuporte.toString());
-    return this.http.patch<Chamado>(`${this.API}/${id}/atender`, {params});
+    const params = new HttpParams().set('idUsuario', idSuporte);
+    return this.http.patch<Chamado>(`${this.API}/${id}/atender`, { params });
   }
 
   //Metodo para finalizar um chamado

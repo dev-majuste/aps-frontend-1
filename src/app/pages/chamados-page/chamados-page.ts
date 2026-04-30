@@ -5,11 +5,13 @@ import { AuthService } from '../../services/auth-service';
 import { ChamadoService } from '../../services/chamado-service';
 import { ModalLayout } from '../../layouts/modal-layout/modal-layout';
 import { CategoriaService } from '../../services/categoria-service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UsuarioService } from '../../services/usuario-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-chamados-page',
-  imports: [SearchbarLayout, ModalLayout, RouterLink],
+  imports: [SearchbarLayout, ModalLayout],
   templateUrl: './chamados-page.html',
   styleUrl: './chamados-page.css',
 })
@@ -20,13 +22,36 @@ export class ChamadosPage implements OnInit{
   searchSelecionado = '';
   exibirModalNovoChamado: boolean = false;
 
-  constructor(private auth: AuthService, private chamadoService: ChamadoService, private categoriaService: CategoriaService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private auth: AuthService, 
+    private chamadoService: ChamadoService, 
+    private categoriaService: CategoriaService, 
+    private cdr: ChangeDetectorRef,
+    private usuarioService: UsuarioService,
+    private rota: Router
+  )  {}
 
   ngOnInit(): void {
     this.usuario = this.auth.getUsuario();
     if(!this.usuario) {return}
-    this.carregarCategorias();
     this.autoSelecionar()
+  }
+
+  abrirChamado(id: number, status: Status) {
+    if (!this.usuario) {return}
+    if (status != Status.EM_ABERTO) {this.rota.navigate(['/chamado',id])}
+    if (this.usuario.cargo != Cargo.CLIENTE) {
+      this.atenderChamado(id)
+    }
+  }
+
+  atenderChamado(id: number) {
+    if(!this.usuario) {return}
+    this.chamadoService.atender(id, this.usuario.id).subscribe({
+      next: (res) => {
+        this.rota.navigate(['/chamado',id])
+      }
+    })
   }
 
   autoSelecionar() {
@@ -48,7 +73,7 @@ export class ChamadosPage implements OnInit{
     });
   }
   //Aqui o id é do usuario para verificação
-  todosChamados(id: number) {
+  todosChamados(id?: number) {
     if (!this.usuario?.id) {return}
 
     this.chamadoService.buscarTodos().subscribe({
@@ -63,19 +88,37 @@ export class ChamadosPage implements OnInit{
   }
   emAtendimento(id: number) {
     //Buscar chamados em que o tecnico esta atendendo
+    this.todosChamados()
+    if(!this.usuario) {return}
+    let lista: Chamado[] = [];
+    this.chamados.forEach(c => {
+      if (c.cliente.cargo == this.usuario?.cargo) {
+        lista.push(c)
+      }
+    })
+    this.chamados = lista;
+
   }
   emAberto(id: number) {
     //Buscar chamados em que o status seja "EM_ABERTO"
+    if(!this.usuario) {return}
+    this.todosChamados()
+    let lista: Chamado[] = []
+    this.chamados.forEach(c => {
+      if(c.status == Status.EM_ABERTO) {
+        lista.push(c)
+      }
+    })
+
   }
   //Novo chamado
   abrirNovoChamado() {
     this.exibirModalNovoChamado = true;
+    this.carregarCategorias()
   }
   criarChamado(titulo: string, descricao: string, categoria: any) {
     if(!this.usuario) {return;}
     if(!titulo || !descricao || !categoria || categoria == "") {return;}
-
-    console.log(categoria)
 
     const novoChamado = {
       titulo: titulo,
@@ -88,7 +131,7 @@ export class ChamadosPage implements OnInit{
     this.chamadoService.criar(novoChamado as Chamado, this.usuario.id).subscribe({
       next: (res) => {
         this.meusChamados();
-        console.log('ERRO',res)
+
         this.exibirModalNovoChamado = false;
       },
       error: (err) => {
@@ -102,6 +145,7 @@ export class ChamadosPage implements OnInit{
       next: (res) => {
         console.log("DADOS CARREGADOS")
         this.categorias = res;
+        this.cdr.detectChanges()
       },
       error: (err) => console.error('Erro ao carregar categorias', err)
     });

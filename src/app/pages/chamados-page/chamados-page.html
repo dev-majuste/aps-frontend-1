@@ -15,7 +15,7 @@
             <span class="erroSpan">Nenhum chamado foi encontrado</span>
         } @else {
             @for (chamado of chamados; track chamado.id) {
-                <div [routerLink]="['/chamado', chamado.id]" class="chamado-card">
+                <div (click)="abrirChamado(chamado.id, chamado.status)" class="chamado-card">
                     <div class="textos">
                         <h1>{{chamado.titulo}} <span>#{{chamado.id}}</span></h1>
                         <p>{{chamado.descricao}}</p>
@@ -42,7 +42,7 @@
                     <option [value]="item.id">{{item.nome}}</option>
                 }
             </select>
-            <button (click)="criarChamado(titulo.value, descricao.value, catSelect.value)">Enviar</button>
+            <button type="button" (click)="criarChamado(titulo.value, descricao.value, catSelect.value)">Enviar</button>
         </form>
     </app-modal-layout>
 }

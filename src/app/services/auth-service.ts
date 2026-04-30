@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   //Metood para atualizar o localStorage
-  public atualizarLocalStorage(data: any) {
+  public atualizarLocalStorage() {
     localStorage.setItem('usuario', JSON.stringify(data));
     this.usuarioSubject.next(data);
   }
