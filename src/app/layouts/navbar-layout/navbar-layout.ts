@@ -24,12 +24,6 @@ export class NavbarLayout implements OnInit {
 
   menu = [
     {
-      texto: "Dashboard",
-      rota: "/dashboard",
-      imagem: "icons/dashboard.png",
-      cargos: ['ADMIN']
-    },
-    {
       texto: "Chamados",
       rota: "/chamados",
       imagem: "icons/chat.png",
