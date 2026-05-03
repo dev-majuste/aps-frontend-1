@@ -11,7 +11,7 @@
         </app-searchbar-layout>
     </div>
     <div class="chamados">
-        @if (chamados == null) {
+        @if (chamados == null || chamados.length == 0) {
             <span class="erroSpan">Nenhum chamado foi encontrado</span>
         } @else {
             @for (chamado of chamados; track chamado.id) {
@@ -22,7 +22,7 @@
                     </div>
                     <div class="info">
                         <span [class]="getStyleStatus(chamado.status)" class="status">{{chamado.status.replaceAll('_', ' ')}}</span>
-                        <p class="data">{{chamado.dataCriacao}}</p>
+                        <p class="data">{{chamado.dataCriacao | date: 'dd/MM/yyyy'}}</p>
                     </div>
                 </div>
             }

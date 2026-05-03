@@ -46,4 +46,77 @@ app-searchbar-layout {
     border-radius: 25px;
     box-shadow: 0 0 5px 3px var(--cor-cinza);
     background-color: var(--cor-cinza-roxo);
+    transition: all 0.2s;
+}
+.avaliacao-card:hover {
+    transition: all 0.2s;
+    transform: scale(1.1);
+}
+.opc {
+    margin-left: 15px;
+    height: 50px;
+    gap: 20px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+}
+.opc span {
+    color: var(--cor-cinza-search);
+    font-weight: bolder;
+    transition: all 0.25s;
+}
+.opc .selecionado {
+    color: var(--cor-roxo-primario);
+    font-size: 20px;
+    transition: ease 0.4s;
+
+}
+.opc span:hover {
+    cursor: pointer;
+    transform: scale3d(1.05, 1.05, 1.0);
+    transition: all 0.2s;
+}
+.card-bottom, .card-top {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.card-top img {
+    margin: 3px 0 0 3px;
+}
+.card-middle {
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px auto;
+    gap: 10px;
+}
+.card-middle span {
+    color: var(--cor-info);
+    font-weight: 600;
+    margin-right: auto;
+}
+.nota img {
+    width: 38px;
+}
+.card-top span {
+    font-size: 19px;
+    color: var(--cor-textos);
+    font-weight: bold;
+    margin: auto auto auto 0;
+}
+.card-middle p {
+    background-color: rgb(207, 204, 211);
+    padding: 10px;
+    width: 100%;
+    font-size: 19px;
+    height: 100px;
+    border-radius: 20px;
+    box-shadow: inset 1px 1px 7px 1px rgba(0, 0, 0, 0.617);
+    color: var(--cor-textos);
+    font-weight: 600;
+
+    overflow-y: auto;
 }

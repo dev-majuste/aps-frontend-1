@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { AuthService } from '../../services/auth-service';
 import { Usuario } from '../../models/types';
+import { SseService } from '../../services/sse-service';
 
 @Component({
   selector: 'app-navbar-layout',
@@ -9,10 +10,17 @@ import { Usuario } from '../../models/types';
   templateUrl: './navbar-layout.html',
   styleUrl: './navbar-layout.css',
 })
-export class NavbarLayout {
+export class NavbarLayout implements OnInit {
   @Input() usuario?: Usuario;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private sseService: SseService, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.auth.usuarioLogado$.subscribe(user => {
+      this.usuario = user;
+      this.cdr.detectChanges();
+    });
+  }
 
   menu = [
     {

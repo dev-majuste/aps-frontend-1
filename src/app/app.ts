@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarLayout } from "./layouts/navbar-layout/navbar-layout";
 import { SseService } from './services/sse-service';
@@ -16,34 +16,14 @@ export class App implements OnInit{
   protected readonly title = signal('suporte-tecnico');
   mostrarNavbar: boolean = false;
 
-  constructor(private sseService: SseService, private auth: AuthService) {}
+  constructor(private sseService: SseService, private auth: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
 // Escuta o estado do login para mostrar/esconder a Navbar
     this.auth.usuarioLogado$.subscribe(usuario => {
-      this.mostrarNavbar = !!usuario; // true se houver usuário, false se for null
-      
-      // Opcional: Só conecta no SSE se estiver logado
-      //Verificar se vai logar com um await
+      this.mostrarNavbar = !!usuario;
       if (usuario) {
-        this.iniciarSse();
         this.usuario = usuario
-      }
-    });
-  }
-
-  private iniciarSse() {
-        this.sseService.conectar().subscribe({
-      next: (res) => {
-        switch(res.tipo) {
-          case 'NOVA_MENSAGEM':
-            console.log("NOVA MENSAGEM");
-            break;
-          case 'USUARIO_ATUALIZADO':
-          case 'CARGO_ATUALIZADO':
-            console.log("CARGO ATUALIZADO")
-            break;
-        }
       }
     });
   }

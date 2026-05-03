@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Usuario } from '../models/types';
 
 @Injectable({
   providedIn: 'root',
@@ -45,9 +46,13 @@ export class AuthService {
   }
 
   //Metood para atualizar o localStorage
-  public atualizarLocalStorage(data: any) {
-    localStorage.setItem('usuario', JSON.stringify(data));
-    this.usuarioSubject.next(data);
+  public atualizarLocalStorage(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.API}/${id}`).pipe(
+      tap((usuario: Usuario) => {
+        localStorage.setItem('usuario', JSON.stringify(usuario))
+        this.usuarioSubject.next(usuario)
+      })
+    )
   }
 
   //Metodo de logout

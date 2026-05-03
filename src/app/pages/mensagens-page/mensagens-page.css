@@ -44,6 +44,7 @@ h1 {
     flex-direction: column;
     justify-content: space-between;
     align-items: end;
+    color: var(--cor-info);
 }
 .mensagens {
     height: 100%;
@@ -151,9 +152,6 @@ h1 {
 }
 .ava img{
     width: 25px;
-    border-radius: 100%;
-    background: linear-gradient(0deg,rgba(215, 156, 61, 1) 0%, rgba(237, 183, 83, 1) 50%, rgba(237, 221, 83, 1) 100%);;
-    box-shadow: 0 0 8px 0.1px rgba(6, 6, 6, 0.267);
 }
 
 .info .status-aberto { background-color: #d65959; }

@@ -1,17 +1,39 @@
 <section class="container">
     <div class="header">
-        <app-searchbar-layout></app-searchbar-layout>
+        <app-searchbar-layout>
+            <div class="opc">
+                @for (item of searchBar; track item.nome) {
+                    <span (click)="item.funcao()" [class.selecionado]="searchSelecionado === item.nome">{{item.nome}}</span>
+                }
+            </div>
+        </app-searchbar-layout>
     </div>
-    @if(!ava || ava.length === 0) {
+    @if(!ava || ava.length == 0) {
         <div class="error-carregar">
             <span>Nenhuma avaliação encontrada</span>
         </div>
     } @else {
         <div class="avaliacoes">
             <div class="grid">
-                @for (categoria of ava; track categoria.id) {
+                @for (avaliacao of ava; track avaliacao.id) {
                 <div class="avaliacao-card">
-                    a
+                    <div class="card-top">
+                        <span>#{{avaliacao.id}}</span>
+                    </div>
+                    <div class="card-middle">
+                        <div class="nota">
+                            @for (i of [].constructor(avaliacao.nota/2); track $index) {
+                                <img src="icons/star.png">
+                            }
+                        </div>
+                        <span>Cliente: {{avaliacao.usuario.nome}}</span>
+                        <span>Tecnico: {{avaliacao.chamado.tecnico?.nome}}</span>
+                        @if (avaliacao.mensagem != '') {
+                            <p>{{avaliacao.mensagem}}</p>
+                        }
+                    </div>
+                    <div class="card-bottom">
+                    </div>
                 </div>
             }
             </div>

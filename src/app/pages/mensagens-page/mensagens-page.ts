@@ -6,7 +6,6 @@ import { MensagemService } from '../../services/mensagem-service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AvaliacaoService } from '../../services/avaliacao-service';
-import { UsuarioService } from '../../services/usuario-service';
 import { ModalLayout } from "../../layouts/modal-layout/modal-layout";
 import { SseService } from '../../services/sse-service';
 
@@ -32,7 +31,6 @@ export class MensagensPage implements OnInit{
     private rota: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private avaService: AvaliacaoService,
-    private usuarioService: UsuarioService,
     private sseService: SseService
   ) {}
 
@@ -44,13 +42,15 @@ export class MensagensPage implements OnInit{
     this.avaService.buscarPorId(this.id).subscribe({
       next: (res) => {
         this.foiAvaliado = true
+      }, error() {
+        console.log('Chamado ainda não foi avaliado')
       }
     })
-
+    this.iniciarSse();
     this.buscarDadosChamado();
     this.buscarMensagens();
     this.buscarAvaliacao();
-    this.iniciarSse();
+    
   }
 
   buscarAvaliacao() {
@@ -132,6 +132,8 @@ export class MensagensPage implements OnInit{
       this.avaService.criar(id, avaliacao as Avaliacao, idUsuario).subscribe({
         next: (res) => {
           this.buscarDadosChamado()
+          this.exibirModalAvaliar = false;
+          this.foiAvaliado = true
         }
       })
     }
@@ -139,9 +141,13 @@ export class MensagensPage implements OnInit{
         this.sseService.conectar().subscribe({
       next: (res) => {
         switch(res.tipo) {
+          case 'CHAMADO_AVALIADO':
+          case 'CHAMADO_ATENDIDO':
+          case 'CHAMADO_FINALIZADO':
           case 'NOVA_MENSAGEM':
-            this.buscarMensagens;
-            this.buscarDadosChamado;
+            this.buscarMensagens();
+            this.buscarDadosChamado();
+            this.buscarAvaliacao()
             break;
         }
       }

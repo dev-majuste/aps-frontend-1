@@ -5,13 +5,14 @@ import { AuthService } from '../../services/auth-service';
 import { ChamadoService } from '../../services/chamado-service';
 import { ModalLayout } from '../../layouts/modal-layout/modal-layout';
 import { CategoriaService } from '../../services/categoria-service';
-import { Router, RouterLink } from '@angular/router';
-import { UsuarioService } from '../../services/usuario-service';
-import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { SseService } from '../../services/sse-service';
 
 @Component({
   selector: 'app-chamados-page',
-  imports: [SearchbarLayout, ModalLayout],
+  standalone: true,
+  imports: [SearchbarLayout, ModalLayout, CommonModule],
   templateUrl: './chamados-page.html',
   styleUrl: './chamados-page.css',
 })
@@ -28,7 +29,7 @@ export class ChamadosPage implements OnInit{
     private chamadoService: ChamadoService, 
     private categoriaService: CategoriaService, 
     private cdr: ChangeDetectorRef,
-    private usuarioService: UsuarioService,
+    private sseService: SseService,
     private rota: Router
   )  {}
 
@@ -36,6 +37,7 @@ export class ChamadosPage implements OnInit{
     this.usuario = this.auth.getUsuario();
     if(!this.usuario) {return}
     this.autoSelecionar()
+    this.iniciarSse()
   }
 
   abrirChamado(id: number, status: Status) {
@@ -137,7 +139,7 @@ export class ChamadosPage implements OnInit{
       this.exibirModalNovoChamado = false;
       this.cdr.detectChanges(); 
       this.criandoChamado = false;
-      this.autoSelecionar();
+      this.recarregarSearch();
     },
     error: (err) => {
       console.error('Erro ao criar um novo chamado:', err);
@@ -197,4 +199,26 @@ export class ChamadosPage implements OnInit{
       cargo: ['SUPORTE','ADMIN']
     }
   ]
+  recarregarSearch() {
+    if (this.searchSelecionado == '') {return}
+    for(let i =0; i < this.searchBar.length; i++) {
+      if (this.searchBar[i].nome == this.searchSelecionado) {
+        this.searchBar[i].funcao(Number(this.usuario?.id))
+      }
+    }
+  }
+  private iniciarSse() {
+        this.sseService.conectar().subscribe({
+      next: (res) => {
+        switch(res.tipo) {
+          case 'NOVA_MENSAGEM':
+          case 'CHAMADO_ATENDIDO':
+          case 'CHAMADO_FINALIZADO':
+          case 'CHAMADO_AVALIADO':
+            this.recarregarSearch()
+            break;
+        }
+      }
+    });
+  }
 }
