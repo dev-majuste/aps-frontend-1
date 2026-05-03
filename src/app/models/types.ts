@@ -2,6 +2,7 @@ export interface Usuario {
     id: number,
     nome: string,
     email: string,
+    senha?: string,
     cargo: Cargo
 }
 
@@ -50,5 +51,5 @@ export enum Status {
     EM_ANDAMENTO = 'EM_ANDAMENTO',
     AGUARDANDO_SUPORTE = 'AGUARDANDO_SUPORTE',
     AGUARDANDO_CLIENTE = 'AGUARDANDO_CLIENTE',
-    FINALIZADO = 'FINALIZADO'
+    RESOLVIDO = 'RESOLVIDO'
 }

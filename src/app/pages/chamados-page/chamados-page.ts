@@ -21,6 +21,7 @@ export class ChamadosPage implements OnInit{
   categorias: Categoria[] = [];
   searchSelecionado = '';
   exibirModalNovoChamado: boolean = false;
+  criandoChamado: boolean = true;
 
   constructor(
     private auth: AuthService, 
@@ -40,7 +41,7 @@ export class ChamadosPage implements OnInit{
   abrirChamado(id: number, status: Status) {
     if (!this.usuario) {return}
     if (status != Status.EM_ABERTO) {this.rota.navigate(['/chamado',id])}
-    if (this.usuario.cargo != Cargo.CLIENTE) {
+    else if (this.usuario.cargo != Cargo.CLIENTE) {
       this.atenderChamado(id)
     }
   }
@@ -66,6 +67,7 @@ export class ChamadosPage implements OnInit{
     this.chamadoService.buscarPorUsuario(this.usuario.id).subscribe({
       next: (dados) => {
         this.chamados = dados;
+        this.cdr.detectChanges()
       },
       error: (err) => {
         console.error('Erro ao buscar chamados:', err);
@@ -74,71 +76,75 @@ export class ChamadosPage implements OnInit{
   }
   //Aqui o id é do usuario para verificação
   todosChamados(id?: number) {
-    if (!this.usuario?.id) {return}
-
+    if (!this.usuario) {return}
     this.chamadoService.buscarTodos().subscribe({
-      next: (dados) => {
-        this.chamados = dados;
+      next: (res) => {
+        if (this.usuario?.cargo == Cargo.SUPORTE) {
+          this.chamados = res.filter(c => c.tecnico?.id === this.usuario?.id)
+        } else {
+          this.chamados = res
+        }
+        this.searchSelecionado = 'Todos os chamados'
         this.cdr.detectChanges()
-      },
-      error: (err) => {
-        console.error('Erro ao buscar chamados:', err);
       }
-    });
+    })
   }
   emAtendimento(id: number) {
-    //Buscar chamados em que o tecnico esta atendendo
-    this.todosChamados()
-    if(!this.usuario) {return}
-    let lista: Chamado[] = [];
-    this.chamados.forEach(c => {
-      if (c.cliente.cargo == this.usuario?.cargo) {
-        lista.push(c)
-      }
-    })
-    this.chamados = lista;
-
+    if (!this.usuario) return;
+    this.chamadoService.buscarTodos().subscribe({
+      next: (dados) => {
+        this.chamados = dados.filter(c => 
+          c.tecnico?.id === this.usuario?.id && 
+          c.status !== Status.EM_ABERTO &&
+          c.status !== Status.RESOLVIDO
+        );
+        this.searchSelecionado = 'Em atendimento';
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Erro ao filtrar atendimentos:', err)
+    });
   }
   emAberto(id: number) {
-    //Buscar chamados em que o status seja "EM_ABERTO"
     if(!this.usuario) {return}
-    this.todosChamados()
-    let lista: Chamado[] = []
-    this.chamados.forEach(c => {
-      if(c.status == Status.EM_ABERTO) {
-        lista.push(c)
+    this.chamadoService.buscarTodos().subscribe({
+      next: (res) => {
+        this.chamados = res.filter(c => c.tecnico?.id === undefined && c.status === Status.EM_ABERTO);
+        this.searchSelecionado = 'Em aberto'
+        this.cdr.detectChanges()
       }
     })
-
   }
   //Novo chamado
   abrirNovoChamado() {
     this.exibirModalNovoChamado = true;
+    this.criandoChamado = false;
     this.carregarCategorias()
   }
   criarChamado(titulo: string, descricao: string, categoria: any) {
-    if(!this.usuario) {return;}
-    if(!titulo || !descricao || !categoria || categoria == "") {return;}
+  if (!this.usuario || this.criandoChamado) return; // Trava cliques duplos
+  if (!titulo || !descricao || !categoria) return;
 
-    const novoChamado = {
-      titulo: titulo,
-      descricao: descricao,
-      categoria: {
-        id: categoria
-      }
+  this.criandoChamado = true;
+
+  const novoChamado = {
+    titulo,
+    descricao,
+    categoria: { id: categoria }
+  };
+
+  this.chamadoService.criar(novoChamado as Chamado, this.usuario.id).subscribe({
+    next: (res) => {
+      this.exibirModalNovoChamado = false;
+      this.cdr.detectChanges(); 
+      this.criandoChamado = false;
+      this.autoSelecionar();
+    },
+    error: (err) => {
+      console.error('Erro ao criar um novo chamado:', err);
+      this.criandoChamado = false;
     }
-
-    this.chamadoService.criar(novoChamado as Chamado, this.usuario.id).subscribe({
-      next: (res) => {
-        this.meusChamados();
-
-        this.exibirModalNovoChamado = false;
-      },
-      error: (err) => {
-        console.error('Erro ao criar um novo chamado:', err)
-      }
-    });
-  }
+  });
+}
 
   carregarCategorias() {
     this.categoriaService.buscarTodos().subscribe({
@@ -155,7 +161,7 @@ export class ChamadosPage implements OnInit{
     switch (status) {
       case Status.EM_ABERTO: return 'status-aberto';
       case Status.EM_ANDAMENTO: return 'status-andamento';
-      case Status.FINALIZADO: return 'status-finalizado';
+      case Status.RESOLVIDO: return 'status-resolvido';
       default: return 'status-aguardando';
     }
   }

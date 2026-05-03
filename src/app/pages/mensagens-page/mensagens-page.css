@@ -20,6 +20,10 @@
     gap: 5px;
     font-weight: 600;
 }
+.textos h1 {
+    display: flex;
+    gap: 15px;
+}
 h1 {
     color: var(--cor-textos);
     font-size: 32px;
@@ -41,3 +45,118 @@ h1 {
     justify-content: space-between;
     align-items: end;
 }
+.mensagens {
+    height: 100%;
+}
+.input-card {
+    background-color: var(--cor-cinza-roxo);
+    padding: 15px;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 20px;
+    position: static;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.485);
+}
+.input-card button {
+    background-color: var(--cor-roxo-primario);
+    color: white;
+    padding: 6px 8px;
+    border-radius: 20px;
+    border-style: none;
+    box-shadow: 0 0 5px 0.1px rgba(0, 0, 0, 0.485);
+}
+.input-card button:hover
+ {
+    cursor: pointer;
+ }.input-card input {
+    width: 90%;
+    height: 10px;
+    padding: 10px;
+    border-radius: 25px;
+    border-style: none;
+    box-shadow: inset 1px 1px 5px 2px rgba(0, 0, 0, 0.485);
+    background-color: var(--cor-roxo-bk);
+    color: var(--cor-textos);
+    font-weight: 500;
+}
+.mensagens {
+    margin: 10px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 97%;
+    gap: 10px;
+    align-items: start;
+}
+.mensagem-card {
+    background-color: #B4ABE0;
+    border-radius: 10px;
+    color: #6D6B6B;
+    height: fit-content;
+    max-width: 60%;
+}
+.msgCliente {
+    margin-left: auto;
+    z-index: 1;
+}
+.card-topo {
+    font-size: 11px;
+    padding: 10px;
+}
+.card-meio {
+    background-color: #C0B6F3;
+    color: #4E4E4E;
+    padding: 10px;
+    font-size: 17px;
+    font-weight: 550;
+}
+.card-fim {
+    display: flex;
+    justify-content: end;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px;
+}
+.info button {
+    padding: 5px 8px;
+    border-style: none;
+    border-radius: 100px;
+    color: white;
+    background-color: var(--cor-roxo-primario);
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.226);
+    transition: ease 0.2s;
+}
+.info button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: ease 0.2s;
+}
+.status {
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.226);
+}
+.ava {
+    color: #d79c3d;
+    font-size: 22px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+.ava img{
+    width: 25px;
+    border-radius: 100%;
+    background: linear-gradient(0deg,rgba(215, 156, 61, 1) 0%, rgba(237, 183, 83, 1) 50%, rgba(237, 221, 83, 1) 100%);;
+    box-shadow: 0 0 8px 0.1px rgba(6, 6, 6, 0.267);
+}
+
+.info .status-aberto { background-color: #d65959; }
+.info .status-andamento { background-color: #62b34e; }
+.info .status-resolvido { background-color: #8f68de; }
+.info .status-aguardando { background-color: #d79c3d; }

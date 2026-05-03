@@ -41,7 +41,7 @@ export class App implements OnInit{
             break;
           case 'USUARIO_ATUALIZADO':
           case 'CARGO_ATUALIZADO':
-            this.auth.atualizarLocalStorage();
+            console.log("CARGO ATUALIZADO")
             break;
         }
       }

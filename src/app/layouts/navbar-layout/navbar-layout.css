@@ -45,6 +45,9 @@ a {
 .menu-item img {
     width: 35px;
 }
+.logout img {
+    width: 25px;
+}
 .profile-card {
     justify-content: space-between;
     padding: 10px 5px;
@@ -63,11 +66,17 @@ a {
     background-color: var(--cor-roxo-secundario);
     color: white;
     box-shadow: 0 0 5px 1px var(--cor-fundo);
+    transition: ease 0.2s;
+}
+.logout button:hover {
+    cursor: pointer;
+    background-color: var(--cor-selecionado);
+    transform: scale(1.2);
+    transition: ease 0.2s;
 }
 .activate-style {
     box-shadow: 0 0 5px 2px #716eae;
     background-color: var(--cor-selecionado);
-    animation: select linear;
     transition: 0.2s;
 }
 a:hover {

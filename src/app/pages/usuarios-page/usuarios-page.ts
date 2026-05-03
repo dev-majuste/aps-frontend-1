@@ -52,7 +52,7 @@ export class UsuariosPage implements OnInit {
       }
     })
   }
-  async atualizarDados(id: number, nome: string, email: string, cargoVindoDoHtml: string) {
+  async atualizarDados(id: number, nome: string, email: string, senha: string, cargoVindoDoHtml: string) {
     // 1. Converte a string do HTML para o seu tipo Cargo (Enum)
     const cargo = cargoVindoDoHtml as Cargo;
 
@@ -63,7 +63,8 @@ export class UsuariosPage implements OnInit {
       id: id,
       nome: nome,
       email: email,
-      cargo: cargo
+      cargo: cargo,
+      senha: senha
     };
 
     // 3. Se o cargo mudou, você PRECISA esperar essa atualização terminar 

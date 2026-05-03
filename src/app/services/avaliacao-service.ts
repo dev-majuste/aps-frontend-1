@@ -23,6 +23,6 @@ export class AvaliacaoService {
   //Metodo para criar uma avalição
   criar(id: number, avaliacao: Avaliacao, idUsuario: number): Observable<Avaliacao> {
     const params = new HttpParams().set('idUsuario', idUsuario)
-    return this.http.post<Avaliacao>(`${this.API}/${id}`, avaliacao, {params})
+    return this.http.post<Avaliacao>(`${this.API}/${id}/avaliar`, avaliacao, {params})
   }
 }

@@ -1,19 +1,31 @@
 <section class="container">
     <div class="header">
-        @if (chamado) {
+        @if (chamado && usuario) {
             <div class="textos">
-                <h1>{{chamado.titulo}}</h1>
+                <h1>{{chamado.titulo}} <span class="ava">
+                    @if (avaliacao) {
+                        @for (i of [].constructor(avaliacao.nota/2); track $index) {
+                            <img src="icons/star.png">
+                        }
+                    }
+                </span></h1>
                 <p>{{chamado.descricao}}</p>
                 <div class="usuarios">
                     <span class="usuario">Cliente: {{chamado.cliente.nome}}</span>
                     <span class="usuario">Suporte: {{chamado.tecnico?.nome}}</span>
                 </div>
             </div>
-        }
         <div class="info">
-            <span class="status">{{chamado?.status}}</span>
-            <p>{{chamado?.dataCriacao}}</p>
+            <span [class]="getStyleStatus(chamado.status)" class="status">{{chamado.status.replaceAll('_', ' ')}}</span>
+            @if (usuario.cargo != 'CLIENTE' && !chamado.status.match('RESOLVIDO')) {
+                <button class="finalizar" (click)="finalizarChamado()">Finalizar o chamado</button>
+            }
+            @if (usuario.cargo == 'CLIENTE' && !avaliacao && chamado.status.match('RESOLVIDO')) {
+                <button class="avaliar" (click)="abrirAvaliar()">Avaliar o chamado</button>
+            }
+            <p>{{chamado.dataCriacao}}</p>
         </div>
+    }
     </div>
     <div class="mensagens">
         @for (mensagem of mensagens; track mensagem.id) {
@@ -31,10 +43,22 @@
         }
     </div>
     <!--Caso seja a vez do usuario-->
-    @if (chamado?.status?.match(usuario!!.cargo)) {
+    @if (chamado && (chamado.status == 'AGUARDANDO_CLIENTE' && usuario?.cargo == 'CLIENTE' || usuario?.cargo == 'SUPORTE' && (chamado.status == 'AGUARDANDO_SUPORTE' || chamado.status == 'EM_ANDAMENTO'))) {
         <div class="input-card">
-            <input type="text" name="mensagem" #msg>
+            <input type="text" name="mensagem" #msg placeholder="Mensagem">
             <button (click)="enviar(msg.value)">Enviar</button>
         </div>
      }
 </section>
+@if (exibirModalAvaliar)  {
+    <app-modal-layout (fechar)="foiAvaliado = true">
+        @if (usuario && chamado)  {
+            <form class="forms-chamado">
+                <h2>Avalie o atendimento</h2>
+                <span>1</span><input type="range" min="1" max="10" #nota><span>10</span>
+                <input type="text" placeholder="Mensagem" #mensagem>
+                <button type="button" (click)="avaliar(chamado.id ,nota.valueAsNumber, mensagem.value, usuario.id)" [disabled]="foiAvaliado">{{ foiAvaliado ? 'Enviando...' : 'Enviar' }}</button>
+            </form>
+        }
+    </app-modal-layout>
+}

@@ -28,7 +28,9 @@
             }
         }
     </div>
-    <button class="criar" (click)="abrirNovoChamado()">Novo Chamado</button>
+    @if (usuario?.cargo == 'CLIENTE') {
+        <button class="criar" (click)="abrirNovoChamado()">Novo Chamado</button>
+    }
 </section>
 @if (exibirModalNovoChamado) {
     <app-modal-layout (fechar)="exibirModalNovoChamado = false">
@@ -42,7 +44,7 @@
                     <option [value]="item.id">{{item.nome}}</option>
                 }
             </select>
-            <button type="button" (click)="criarChamado(titulo.value, descricao.value, catSelect.value)">Enviar</button>
+            <button type="button" (click)="criarChamado(titulo.value, descricao.value, catSelect.value)" [disabled]="criandoChamado">{{ criandoChamado ? 'Enviando...' : 'Enviar' }}</button>
         </form>
     </app-modal-layout>
 }

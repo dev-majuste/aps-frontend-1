@@ -41,13 +41,13 @@ export class ChamadoService {
 
   //Metodo para atender um chamado
   atender(id: number, idSuporte: number): Observable<Chamado> {
-    const params = new HttpParams().set('idUsuario', idSuporte);
-    return this.http.patch<Chamado>(`${this.API}/${id}/atender`, { params });
-  }
+  const params = new HttpParams().set('idUsuario', idSuporte.toString());
+  return this.http.patch<Chamado>(`${this.API}/${id}/atender`, {}, { params });
+}
 
-  //Metodo para finalizar um chamado
-    finalizar(id: number, idSuporte: number): Observable<Chamado> {
-    const params = new HttpParams().set('idUsuario', idSuporte.toString());
-    return this.http.patch<Chamado>(`${this.API}/${id}/finalizar`, {params});
-  }
+// Metodo para finalizar um chamado
+finalizar(id: number, idSuporte: number): Observable<Chamado> {
+  const params = new HttpParams().set('idUsuario', idSuporte.toString());
+  return this.http.patch<Chamado>(`${this.API}/${id}/finalizar`, {}, { params });
+}
 }
