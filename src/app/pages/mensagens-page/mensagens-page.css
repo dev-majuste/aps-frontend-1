@@ -158,3 +158,54 @@ h1 {
 .info .status-andamento { background-color: #62b34e; }
 .info .status-resolvido { background-color: #8f68de; }
 .info .status-aguardando { background-color: #d79c3d; }
+
+.forms-chamado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:25px;
+}
+.forms-chamado h2 {
+    color: var(--cor-roxo-primario);
+    font-weight: 700;
+    font-size: 36px;
+    margin: 15px 0;
+}
+.forms-chamado input {
+    background-color: var(--cor-cinza-roxo-bk);
+    width: 250px;
+    padding: 10px 20px;
+    border-radius: 100px;
+    border-style: none;
+    box-shadow: inset 1px 1px 5px 1px var(--cor-cinza);
+    color: var(--cor-textos);
+    font-size: 20px;
+}
+.forms-chamado select {
+    background-color: var(--cor-cinza-roxo-bk);
+    width: 290px;
+    padding: 10px 10px;
+    border-radius: 100px;
+    border-style: none;
+    box-shadow: inset 1px 1px 5px 1px var(--cor-cinza);
+    color: var(--cor-textos);
+    font-weight: 700;
+    font-size: 16px;
+}
+.forms-chamado button {
+    background-color: var(--cor-roxo-primario);
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    border-style: none;
+    border-radius: 100px;
+    padding: 15px 25px;
+    box-shadow: 0 0 5px 1px var(--cor-roxo-escuro);
+    margin: 15px 0;
+    transition: all 0.25s;
+}
+.forms-chamado button:hover {
+    transform: scale(1.1);
+    transition: all 0.25s;
+    cursor: pointer;
+}

@@ -81,7 +81,7 @@ app-searchbar-layout {
 }
 .chamado-card {
     width: 95%;
-    height: 120px;
+    height: 130px;
     display: flex;
     justify-content: space-between;
     padding: 25px 20px;
@@ -124,7 +124,7 @@ app-searchbar-layout {
     align-items: center;
     gap:25px;
 }
-.forms-editor h2 {
+.forms-chamado h2 {
     color: var(--cor-roxo-primario);
     font-weight: 700;
     font-size: 36px;

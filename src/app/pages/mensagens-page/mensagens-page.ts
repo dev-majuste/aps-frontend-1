@@ -23,6 +23,7 @@ export class MensagensPage implements OnInit{
   avaliacao?: Avaliacao;
   foiAvaliado: boolean = false;
   exibirModalAvaliar: boolean = false;
+  eviandoMsg: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -101,12 +102,17 @@ export class MensagensPage implements OnInit{
     const mensagem = {
       mensagem: msg
     }
+    this.eviandoMsg = true;
 
     this.msgService.enviar(mensagem as Mensagem, this.id, this.usuario.id).subscribe({
       next: (res) => {
         this.buscarMensagens()
         this.buscarDadosChamado();
         this.cdr.detectChanges();
+        this.eviandoMsg = false;
+      },
+      error: (err) => {
+        this.eviandoMsg = false;
       }
     });
   }
@@ -125,6 +131,7 @@ export class MensagensPage implements OnInit{
       this.exibirModalAvaliar = true
     }
     avaliar(id: number, nota: number, comentario: string, idUsuario: number) {
+      if (nota == 0 || !nota) {return}
       const avaliacao = {
         nota: nota,
         mensagem: comentario

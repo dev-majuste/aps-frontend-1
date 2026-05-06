@@ -10,6 +10,7 @@
                     }
                 </span></h1>
                 <p>{{chamado.descricao}}</p>
+                <p>Categoria: {{chamado.categoria.nome}} - {{chamado.categoria.descricao}}</p>
                 <div class="usuarios">
                     <span class="usuario">Cliente: {{chamado.cliente.nome}}</span>
                     <span class="usuario">Suporte: {{chamado.tecnico?.nome}}</span>
@@ -46,16 +47,16 @@
     @if (chamado && (chamado.status == 'AGUARDANDO_CLIENTE' && usuario?.cargo == 'CLIENTE' || usuario?.cargo == 'SUPORTE' && (chamado.status == 'AGUARDANDO_SUPORTE' || chamado.status == 'EM_ANDAMENTO'))) {
         <div class="input-card">
             <input type="text" name="mensagem" #msg placeholder="Mensagem">
-            <button (click)="enviar(msg.value)">Enviar</button>
+            <button (click)="enviar(msg.value) " [disabled]="eviandoMsg">{{ eviandoMsg ? 'Enviando...' : 'Enviar' }}</button>
         </div>
      }
 </section>
 @if (exibirModalAvaliar)  {
-    <app-modal-layout (fechar)="foiAvaliado = true">
+    <app-modal-layout (fechar)="exibirModalAvaliar = false">
         @if (usuario && chamado)  {
             <form class="forms-chamado">
                 <h2>Avalie o atendimento</h2>
-                <span>1</span><input type="range" min="1" max="10" #nota><span>10</span>
+                <input type="number" min="1" max="10" #nota placeholder="Nota (1-10)" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                 <input type="text" placeholder="Mensagem" #mensagem>
                 <button type="button" (click)="avaliar(chamado.id ,nota.valueAsNumber, mensagem.value, usuario.id)" [disabled]="foiAvaliado">{{ foiAvaliado ? 'Enviando...' : 'Enviar' }}</button>
             </form>

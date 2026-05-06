@@ -19,6 +19,7 @@
                     <div class="textos">
                         <h1>{{chamado.titulo}} <span>#{{chamado.id}}</span></h1>
                         <p>{{chamado.descricao}}</p>
+                        <p>Categoria: {{chamado.categoria.nome}} - {{chamado.categoria.descricao}}</p>
                     </div>
                     <div class="info">
                         <span [class]="getStyleStatus(chamado.status)" class="status">{{chamado.status.replaceAll('_', ' ')}}</span>
@@ -41,7 +42,7 @@
             <select #catSelect (change)="0">
                 <option value="" disabled selected>Selecione uma categoria</option>
                 @for (item of categorias; track item.id) {
-                    <option [value]="item.id">{{item.nome}}</option>
+                    <option [value]="item.id">{{item.nome}} - {{item.descricao}}</option>
                 }
             </select>
             <button type="button" (click)="criarChamado(titulo.value, descricao.value, catSelect.value)" [disabled]="criandoChamado">{{ criandoChamado ? 'Enviando...' : 'Enviar' }}</button>
